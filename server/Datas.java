@@ -11,7 +11,7 @@ public class Datas{
         search = normalize(search);
         if(location.isEmpty() || search.isEmpty())
             throw new IllegalArgumentException();
-        String [] split = search.split(" ");
+        String [] split = search.split("\\s+");
 
         ConcurrentHashMap<String, Integer> temp = searches.get(location);
         boolean empty = false;
@@ -46,7 +46,7 @@ public class Datas{
 
     public static void main (String [] args){
         Datas s = new Datas();
-        s.search("Ciao come va in quel di di milano", "rapallo");
+        s.search("Ciao come     va in quel di di milano", "rapallo");
         s.search("CIAO come MILANO MILANO MILANO", "rapallo");
         s.search("cangioloni Giacomo", "Chiavari");
         s.search("va quel cangioloni", "Rapallo");
