@@ -7,24 +7,24 @@ public class Data {
     private String words;
     private String location;
     private static final int maxWords = 3;//numero delle parole, più frequenti per ogni città, da stampare
-    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> Ricerche = new ConcurrentHashMap<>(); //hashMap che funziona da "database" in cui salviamo le parole cercate nei vari luoghi
-    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> MSW = new ConcurrentHashMap<>();//usiamo per memorizzare le parole più frequenti
+    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> searches = new ConcurrentHashMap<>(); //hashMap che funziona da "database" in cui salviamo le parole cercate nei vari luoghi
+    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> mostsearchedwords = new ConcurrentHashMap<>();//usiamo per memorizzare le parole più frequenti
 
     public boolean research(String words, String location) {
         this.location = normalize(location);
         this.words = normalize(words);
         if(this.location.isEmpty() || this.words.isEmpty())
             return false;
-        Store();
+        store();
         return true;
     }
 
-    private void Store() {
+    private void store() {
         ConcurrentHashMap<String, Integer> mapWords = new ConcurrentHashMap<>();
-        if(Ricerche.putIfAbsent(location, mapWords)==null)
+        if(searches.putIfAbsent(location, mapWords)==null)
             storeWords(mapWords);
         else
-            storeWords(Ricerche.get(location));
+            storeWords(searches.get(location));
     }
 
     private void storeWords(ConcurrentHashMap<String, Integer> mapWords) {
@@ -43,11 +43,11 @@ public class Data {
     }
 
     private void updateMSW(String eachWord, int valueI) {
-        ConcurrentHashMap<String, Integer> MSWmapWords = new ConcurrentHashMap<String, Integer>();
-        if(MSW.putIfAbsent(location, MSWmapWords)==null)
+        ConcurrentHashMap<String, Integer> MSWmapWords = new ConcurrentHashMap<>();
+        if(mostsearchedwords.putIfAbsent(location, MSWmapWords) == null)
             updateWordsMSW(MSWmapWords, eachWord, valueI);
         else
-            updateWordsMSW(MSW.get(location), eachWord, valueI);
+            updateWordsMSW(mostsearchedwords.get(location), eachWord, valueI);
     }
 
     private synchronized void updateWordsMSW(ConcurrentHashMap<String, Integer> MSWmapWords, String eachWord, int valueI) {
@@ -65,9 +65,9 @@ public class Data {
     }
 
     private String findMin(ConcurrentHashMap<String, Integer> MSWmapWords){
-        int min=0;
-        String wordMin=null;
-        boolean flag=true;
+        int min = 0;
+        String wordMin = null;
+        boolean flag = true;
         for (String W: MSWmapWords.keySet()){
             if(flag) {
                 wordMin=W;
@@ -84,26 +84,24 @@ public class Data {
         return wordMin;
     }
 
-    private String normalize(String words) {
-        if(words == null)
+    private String normalize(String s) {
+        if (s == null)
             throw new IllegalArgumentException();
-        words = words.replaceAll("[^a-zA-Z]", " ");
-        words = words.replaceAll("\\s+", " ");
-        words = words.replaceAll("^\\s", "");
-        words = words.toLowerCase();
-        return words;
+        s = s.replaceAll("(\\W)|(\\s+)", " ");
+        s = s.replaceAll("^\\s", "");
+        s = s.toLowerCase();
+        return s;
     }
 
     public synchronized String MostSearchedW() {
         String res = "";
-        for (String loc: MSW.keySet()){ //
-            String value = MSW.get(loc).toString();
+        for (String loc: mostsearchedwords.keySet()){ //
+            String value = mostsearchedwords.get(loc).toString();
             value = value.replaceAll("=", ":");
             value = value.replace("{", "[");
             value = value.replace("}", "]");
             res = res.concat(loc + ": " + value + ", ");
         }
-        //gui.update("Parole più frequenti stampate");
         return res;
     }
 }

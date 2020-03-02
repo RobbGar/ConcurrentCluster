@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import shared.IClient;
 import javax.swing.ImageIcon;
@@ -22,20 +24,20 @@ import javax.swing.ImageIcon;
 public class ClientGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	protected ClientGUI guiReference = this;
-	protected IClient client;
-	protected String IP ;
-	protected JPanel contentPane;
-	protected JLabel messageField;
-	protected JTextField IpField;
-    protected JLabel IpAdress;
-    protected JButton IpButton;
-    protected JButton searchButton; //search button
-    protected JTextField searchBox; //search box
-    protected JTextField positionBox; //position box
-    protected JTextArea echoes; //echo box
-    protected JScrollPane scrollPane; //scroll
-    protected JButton frequentsButton; //Frequent-words button
+	private ClientGUI guiReference = this;
+	private IClient client;
+	private String IP ;
+	private JPanel contentPane;
+	private JLabel messageField;
+	private JTextField IpField;
+    private JLabel IpAdress;
+    private JButton IpButton;
+    private JButton searchButton; //search button
+    private JTextField searchBox; //search box
+    private JTextField positionBox; //position box
+    private JTextArea echoes; //echo box
+    private JScrollPane scrollPane; //scroll
+    private JButton frequentsButton; //Frequent-words button
     	
 	/**
 	 * Launch the application.
@@ -58,8 +60,11 @@ public class ClientGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		ImageIcon img = new ImageIcon("ico.png");
+		setIconImage(img.getImage());
+		setResizable(false);
 		
-		IpAdress = new JLabel("Please, insert your server IP adress:");
+		IpAdress = new JLabel("Insert IP adress:");
 		IpAdress.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		IpAdress.setBounds(10, 50, 260, 14);
 		contentPane.add(IpAdress);
@@ -69,11 +74,16 @@ public class ClientGUI extends JFrame {
 		contentPane.add(IpField);
 		IpField.setColumns(10);
 		IpField.setText("localhost");
-		IpButton = new JButton("Insert");
+		IpButton = new JButton("Connect");
 		IpButton.addActionListener(arg0 -> {
 			 String ip = IpField.getText();
-			 IP = ip ;
-			 client = new Client(guiReference ,IP);
+			 if (validIP(ip)) {
+				 IP = ip;
+				 client = new Client(guiReference, IP);
+			 }
+			 else {
+				 JOptionPane.showMessageDialog(this, "Insert a Valid IP Address");
+			 }
 		});
 		IpButton.setBounds(454, 48, 111, 22);
 		contentPane.add(IpButton);
@@ -97,9 +107,9 @@ public class ClientGUI extends JFrame {
 		contentPane.add(positionBox);
 
 		//creazione bottone di ricerca
-		searchButton = new JButton("Send!");
+		searchButton = new JButton("Send");
 		searchButton.addActionListener(e -> {
-			if (!checkIp()) return;
+			if (!validIP(IP)) return;
 			String text = searchBox.getText();
 			String position = positionBox.getText();
 			(new MyWorker(guiReference, "search", client, position, text)).execute();
@@ -114,7 +124,7 @@ public class ClientGUI extends JFrame {
 		//creazione bottone per stampa parole più frequenti
 		frequentsButton = new JButton("Show frequent words!");
 		frequentsButton.addActionListener(e -> {
-			if (!checkIp()) return;
+			if (!validIP(IP)) return;
 			(new MyWorker(guiReference, "showFrequents", client,null,null)).execute();
 		});
 		frequentsButton.setBounds(20, 364, 187, 25);
@@ -134,7 +144,7 @@ public class ClientGUI extends JFrame {
 		contentPane.add(lblStatus);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("ConcurrentCluster\\client\\google.png"));
+		lblNewLabel.setIcon(new ImageIcon("client/google.png"));
 		lblNewLabel.setBounds(20, 120, 566, 192);
 		contentPane.add(lblNewLabel);
 		setLocationRelativeTo(null);
@@ -146,11 +156,15 @@ public class ClientGUI extends JFrame {
 		return true;
 	}
 	
-	private boolean checkIp(){
-		if (IP == null || IP.equals("")){
-			JOptionPane.showMessageDialog (guiReference,"IP ADRESS IS MISSING :|");
+	private boolean validIP(String ip){
+		//if (IP == null)
+		//	return false;
+
+		Pattern pattern = Pattern.compile("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$|localhost");
+		Matcher m = pattern.matcher(ip);
+		if (!m.matches())
 			return false;
-		}
-		return true;
+		else
+			return true;
 	}
 }

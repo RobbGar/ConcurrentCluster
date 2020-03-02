@@ -33,7 +33,7 @@ public class Client implements IClient{
     @Override
     public boolean send(String text, String position) throws RemoteException {
     	if (text.equals("") || position.equals("")) return false;
-    	return server.research(text, position);
+    	return server.search(text, position);
     }
     	
     @Override
