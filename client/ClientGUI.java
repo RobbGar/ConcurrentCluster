@@ -157,9 +157,6 @@ public class ClientGUI extends JFrame {
 	}
 	
 	private boolean validIP(String ip){
-		//if (IP == null)
-		//	return false;
-
 		Pattern pattern = Pattern.compile("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$|localhost");
 		Matcher m = pattern.matcher(ip);
 		if (!m.matches())
