@@ -8,9 +8,9 @@ public class Data {
     private String location;
     private static final int maxWords = 3;//numero delle parole, più frequenti per ogni città, da stampare
     private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> searches = new ConcurrentHashMap<>(); //hashMap che funziona da "database" in cui salviamo le parole cercate nei vari luoghi
-    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> mostsearchedwords = new ConcurrentHashMap<>();//usiamo per memorizzare le parole più frequenti
+    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> mostSearchedWords = new ConcurrentHashMap<>();//usiamo per memorizzare le parole più frequenti
 
-    public boolean research(String words, String location) {
+    public boolean search(String words, String location) {
         this.location = normalize(location);
         this.words = normalize(words);
         if(this.location.isEmpty() || this.words.isEmpty())
@@ -44,10 +44,10 @@ public class Data {
 
     private void updateMSW(String eachWord, int valueI) {
         ConcurrentHashMap<String, Integer> MSWmapWords = new ConcurrentHashMap<>();
-        if(mostsearchedwords.putIfAbsent(location, MSWmapWords) == null)
+        if(mostSearchedWords.putIfAbsent(location, MSWmapWords) == null)
             updateWordsMSW(MSWmapWords, eachWord, valueI);
         else
-            updateWordsMSW(mostsearchedwords.get(location), eachWord, valueI);
+            updateWordsMSW(mostSearchedWords.get(location), eachWord, valueI);
     }
 
     private synchronized void updateWordsMSW(ConcurrentHashMap<String, Integer> MSWmapWords, String eachWord, int valueI) {
@@ -95,8 +95,8 @@ public class Data {
 
     public synchronized String MostSearchedW() {
         String res = "";
-        for (String loc: mostsearchedwords.keySet()){ //
-            String value = mostsearchedwords.get(loc).toString();
+        for (String loc: mostSearchedWords.keySet()){ //
+            String value = mostSearchedWords.get(loc).toString();
             value = value.replaceAll("=", ":");
             value = value.replace("{", "[");
             value = value.replace("}", "]");

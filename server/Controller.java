@@ -1,16 +1,18 @@
 package server;
 
 public class Controller {
-    ServerGUI view;
+    private ServerGUI view;
 
 
     public Controller(ServerGUI v){
         view = v;
-        initView();
+        initController();
     }
 
-    private void initView(){
-
+    private void initController(){
+        view.getExitBtn().addActionListener(e ->
+                System.exit(0)
+        );
     }
 
 }

@@ -13,8 +13,9 @@ public class Search implements Callable<Boolean> {
         this.location = location;
         this.data = database;
     }
+
     @Override
     public Boolean call() {
-        return data.research(words,location);
+        return data.search(words,location);
     }
 }

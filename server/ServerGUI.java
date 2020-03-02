@@ -14,10 +14,13 @@ public class ServerGUI extends JFrame {
 	private JTextArea textArea;
     private JLabel lblIndirizzoIpServer;
     private JLabel lblAddr;
-    private JButton exitBtn;
-	
-    
-    public ServerGUI() throws UnknownHostException {
+	private JButton exitBtn;
+
+	protected JButton getExitBtn() {
+		return exitBtn;
+	}
+
+	public ServerGUI() throws UnknownHostException {
 		setBounds(100, 100, 512, 497);
 
 		ImageIcon img = new ImageIcon("ico.png");
@@ -42,9 +45,6 @@ public class ServerGUI extends JFrame {
 
 		exitBtn = new JButton("QUIT");
 		exitBtn.setBounds(360, 16, 100, 30);
-		exitBtn.addActionListener(e ->
-			System.exit(0)
-		);
 		contentPane.add(exitBtn);
 		
 		textArea = new JTextArea(160, 250);
@@ -55,7 +55,7 @@ public class ServerGUI extends JFrame {
 		server  = new Server(guiReference);
     }
 		
-    public void update(String msg) {
+    protected void update(String msg) {
 		SwingUtilities.invokeLater(() -> textArea.append(msg+"\n"));
 	}
 	
@@ -63,6 +63,7 @@ public class ServerGUI extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				ServerGUI frame = new ServerGUI();
+				Controller c = new Controller(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
