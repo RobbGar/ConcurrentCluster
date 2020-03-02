@@ -24,17 +24,17 @@ import javax.swing.ImageIcon;
 public class ClientGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private ClientGUI guiReference = this;
+	protected ClientGUI guiReference = this;
 	private IClient client;
 	private String IP ;
 	private JPanel contentPane;
-	private JLabel messageField;
+	protected JLabel messageField;
 	private JTextField IpField;
     private JLabel IpAdress;
     private JButton IpButton;
     private JButton searchButton; //search button
-    private JTextField searchBox; //search box
-    private JTextField positionBox; //position box
+    protected JTextField searchBox; //search box
+    protected JTextField positionBox; //position box
     private JTextArea echoes; //echo box
     private JScrollPane scrollPane; //scroll
     private JButton frequentsButton; //Frequent-words button
