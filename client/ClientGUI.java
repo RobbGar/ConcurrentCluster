@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 
 import shared.IClient;
+import javax.swing.ImageIcon;
 
 public class ClientGUI extends JFrame {
 
@@ -31,7 +32,6 @@ public class ClientGUI extends JFrame {
     protected JButton IpButton;
     protected JButton searchButton; //search button
     protected JTextField searchBox; //search box
-    protected JLabel positionLabel; //"POSITION" label
     protected JTextField positionBox; //position box
     protected JTextArea echoes; //echo box
     protected JScrollPane scrollPane; //scroll
@@ -53,19 +53,19 @@ public class ClientGUI extends JFrame {
 	
 	public ClientGUI() {
 	
-		setBounds(100, 100, 512, 497);
+		setBounds(100, 100, 709, 497);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		IpAdress = new JLabel("IP ADRESS");
+		IpAdress = new JLabel("Please, insert your server IP adress:");
 		IpAdress.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		IpAdress.setBounds(22, 10, 172, 14);
+		IpAdress.setBounds(10, 50, 260, 14);
 		contentPane.add(IpAdress);
 		
 		IpField = new JTextField();
-		IpField.setBounds(48, 30, 146, 20);
+		IpField.setBounds(269, 49, 175, 20);
 		contentPane.add(IpField);
 		IpField.setColumns(10);
 		IpField.setText("localhost");
@@ -75,31 +75,25 @@ public class ClientGUI extends JFrame {
 			 IP = ip ;
 			 client = new Client(guiReference ,IP);
 		});
-		IpButton.setBounds(220, 30, 95, 22);
+		IpButton.setBounds(454, 48, 111, 22);
 		contentPane.add(IpButton);
 		
 		messageField = new JLabel("");
-		messageField.setBounds(48, 50, 400, 45);
+		messageField.setBounds(425, 4, 258, 34);
 		contentPane.add(messageField);
 				
-		JLabel textLabel = new JLabel("Text:");
-		textLabel.setBounds(48, 170, 106, 16);
+		JLabel textLabel = new JLabel("Search:");
+		textLabel.setBounds(20, 325, 86, 16);
 		contentPane.add(textLabel);
 				
 		//creazione casella per inserire il testo
 		searchBox = new JTextField();
-		searchBox.setBounds(48, 190, 100, 25);
+		searchBox.setBounds(116, 323, 528, 20);
 		contentPane.add(searchBox);
-
-		//creazione label posizione
-		positionLabel = new JLabel("SEARCH");
-		positionLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		positionLabel.setBounds(22, 100, 172, 14);
-		contentPane.add(positionLabel);
 
 		//creazione casella per inserire il testo
 		positionBox = new JTextField();
-		positionBox.setBounds(48, 140, 100, 25);
+		positionBox.setBounds(298, 89, 146, 20);
 		contentPane.add(positionBox);
 
 		//creazione bottone di ricerca
@@ -110,11 +104,11 @@ public class ClientGUI extends JFrame {
 			String position = positionBox.getText();
 			(new MyWorker(guiReference, "search", client, position, text)).execute();
 		});
-		searchButton.setBounds(60, 230, 75, 25);
+		searchButton.setBounds(533, 354, 111, 25);
 		contentPane.add(searchButton);
 
-		JLabel locLabel = new JLabel("Position:");
-		locLabel.setBounds(48, 120, 106, 16);
+		JLabel locLabel = new JLabel("Where are you searching from?");
+		locLabel.setBounds(10, 91, 260, 16);
 		contentPane.add(locLabel);
 
 		//creazione bottone per stampa parole più frequenti
@@ -123,16 +117,26 @@ public class ClientGUI extends JFrame {
 			if (!checkIp()) return;
 			(new MyWorker(guiReference, "showFrequents", client,null,null)).execute();
 		});
-		frequentsButton.setBounds(250, 165, 200, 25);
+		frequentsButton.setBounds(20, 364, 187, 25);
 		contentPane.add(frequentsButton);
 				
 		//creazione area di testo con scrollbar
-		echoes = new JTextArea(160, 250);
+		echoes = new JTextArea(1, 5);
+		echoes.setTabSize(1);
 		echoes.setEditable(false);
 		scrollPane = new JScrollPane(echoes);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(20, 300, 470, 150);
+		scrollPane.setBounds(20, 400, 650, 50);
 		contentPane.add(scrollPane);
+		
+		JLabel lblStatus = new JLabel("Status :");
+		lblStatus.setBounds(369, 4, 46, 14);
+		contentPane.add(lblStatus);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("ConcurrentCluster\\client\\google.png"));
+		lblNewLabel.setBounds(20, 120, 566, 192);
+		contentPane.add(lblNewLabel);
 		setLocationRelativeTo(null);
 				
 	}
@@ -149,5 +153,4 @@ public class ClientGUI extends JFrame {
 		}
 		return true;
 	}
-		
 }
