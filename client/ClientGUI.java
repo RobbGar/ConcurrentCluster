@@ -138,7 +138,8 @@ public class ClientGUI extends JFrame {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(20, 400, 650, 50);
 		contentPane.add(scrollPane);
-		
+
+
 		JLabel lblStatus = new JLabel("Status :");
 		lblStatus.setBounds(369, 4, 46, 14);
 		contentPane.add(lblStatus);
