@@ -134,7 +134,7 @@ public class ClientGUI extends JFrame {
 		contentPane.add(lblStatus);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("ConcurrentCluster\\client\\google.png"));
+		lblNewLabel.setIcon(new ImageIcon(ClientGUI.class.getResource("images/google.png")));
 		lblNewLabel.setBounds(20, 120, 566, 192);
 		contentPane.add(lblNewLabel);
 		setLocationRelativeTo(null);
