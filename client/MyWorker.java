@@ -46,7 +46,8 @@ public class MyWorker extends SwingWorker<Boolean, Void> {
 		
 		switch(pressed) {
 		case "search": {
-			if (!result) gui.messageField.setText("A FIELD IS MISSING!");
+			if (!(gui.messageField.getText()=="CONNECTED..")) gui.messageField.setText("WRONG IP!"); 
+			else if (!result) gui.messageField.setText("A FIELD IS MISSING!");
 				else{
 					gui.messageField.setText("HERE WE ARE ;)");
 					try {
