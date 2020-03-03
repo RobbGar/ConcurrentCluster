@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Data {
+public class Data{
 
     private ConcurrentHashMap<String, ConcurrentHashMap<String,Integer>> searches = new ConcurrentHashMap<>();
     private static int totWords = 0; //Total words searched
@@ -73,38 +73,58 @@ public class Data {
 
     }
 
-    protected void save() {
+    protected boolean save() {
+        reset();
         try {
             FileOutputStream fos =
-                    new FileOutputStream("hashmap.ser");
+                    new FileOutputStream("server/data/hashmap.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(searches);
             oos.close();
             fos.close();
-            System.out.printf("Serialized HashMap data is saved in hashmap.json");
+            FileOutputStream fos1 =
+                    new FileOutputStream("server/data/totwords.ser");
+            ObjectOutputStream os = new ObjectOutputStream(fos1);
+            os.writeObject(totWords);
+            os.close();
+            fos1.close();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    protected void load(){
+    protected boolean load(){
         try
         {
-            FileInputStream fis = new FileInputStream("hashmap.json");
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            FileInputStream hm = new FileInputStream("server/data/hashmap.ser");
+            ObjectInputStream ois = new ObjectInputStream(hm);
+            FileInputStream tw = new FileInputStream("server/data/totwords.ser");
+            ObjectInputStream ois1 = new ObjectInputStream(tw);
             searches = (ConcurrentHashMap) ois.readObject();
+            totWords = (Integer) ois1.readObject();
             ois.close();
-            fis.close();
+            tw.close();
+            ois1.close();
+            hm.close();
+            return true;
         }catch(IOException ioe)
         {
             ioe.printStackTrace();
-            return;
+            return false;
         }catch(ClassNotFoundException c)
         {
             System.out.println("Class not found");
             c.printStackTrace();
-            return;
+            return false;
         }
+    }
+
+    protected boolean reset(){
+        File file = new File("server/data/hashmap.ser");
+        File file1 = new File("server/data/totwords.ser");
+        return file.delete() && file1.delete();
     }
 
     public static void main (String [] args){

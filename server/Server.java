@@ -22,12 +22,16 @@ public class Server implements IServer{
 	private ServerGUI view;
 	private Data data;
 
-	public void loadData(){
-		data.load();
+	boolean loadData(){
+		return data.load();
 	}
 
-	public void saveData(){
-		data.save();
+	boolean saveData(){
+		return data.save();
+	}
+
+	boolean resetData(){
+		return data.reset();
 	}
 
 	public Server(ServerGUI x) {
@@ -80,7 +84,10 @@ public class Server implements IServer{
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Requesting the most searched words "));
-		} 
+		}
+		catch (IllegalArgumentException e){
+			view.update(e.getMessage());
+		}
 		view.update("Requested the most searched words");
 		return res;
 	}

@@ -144,7 +144,6 @@ public class ClientGUI extends JFrame {
 		scrollPane.setBounds(20, 400, 650, 50);
 		contentPane.add(scrollPane);
 
-
 		JLabel lblStatus = new JLabel("Status :");
 		lblStatus.setBounds(369, 4, 46, 14);
 		contentPane.add(lblStatus);
@@ -154,7 +153,6 @@ public class ClientGUI extends JFrame {
 		lblNewLabel.setBounds(153, 120, 470, 192);
 		contentPane.add(lblNewLabel);
 		setLocationRelativeTo(null);
-				
 	}
 			
 	public boolean Update(String msg) {

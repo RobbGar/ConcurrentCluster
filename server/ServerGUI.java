@@ -14,7 +14,7 @@ public class ServerGUI extends JFrame {
 	private JTextArea textArea;
     private JLabel lblIndirizzoIpServer;
     private JLabel lblAddr;
-	private JButton exitBtn;
+	private JButton rstBtn;
 	private JButton loadBtn;
 	private JButton saveBtn;
 
@@ -26,8 +26,8 @@ public class ServerGUI extends JFrame {
 		return saveBtn;
 	}
 
-	protected JButton getExitBtn() {
-		return exitBtn;
+	protected JButton getRstBtn() {
+		return rstBtn;
 	}
 
 	public ServerGUI() throws UnknownHostException {
@@ -53,9 +53,9 @@ public class ServerGUI extends JFrame {
 		lblIndirizzoIpServer.setBounds(42, 26, 172, 14);
 		contentPane.add(lblIndirizzoIpServer);
 
-		exitBtn = new JButton("QUIT");
-		exitBtn.setBounds(360, 16, 80, 30);
-		contentPane.add(exitBtn);
+		rstBtn = new JButton("RESET");
+		rstBtn.setBounds(360, 16, 80, 30);
+		contentPane.add(rstBtn);
 
 		loadBtn = new JButton("LOAD");
 		loadBtn.setBounds(260, 16, 80, 30);
@@ -69,7 +69,7 @@ public class ServerGUI extends JFrame {
 		textArea.setBounds(22, 60, 458, 390);
 		contentPane.add(textArea);
 		textArea.setEditable(false);
-
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		server  = new Server(guiReference);
     }
 		
