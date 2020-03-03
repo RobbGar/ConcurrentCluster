@@ -49,6 +49,15 @@ public class MyWorker extends SwingWorker<Boolean, Void> {
 			if (!result) gui.messageField.setText("A FIELD IS MISSING!");
 				else{
 					gui.messageField.setText("HERE WE ARE ;)");
+					try {
+				         String search = "#q="+gui.searchBox.getText().toString().trim();
+				         search = search.replaceAll(" ","+");
+				         String url = "http:////www.google.com//"+search;
+				         java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+				       }
+				       catch (java.io.IOException e) {
+				           System.out.println(e.getMessage());
+				       }
 					gui.searchBox.setText("");
 					gui.positionBox.setText("");
 				}
