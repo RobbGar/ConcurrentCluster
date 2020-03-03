@@ -89,7 +89,7 @@ public class ClientGUI extends JFrame {
 				
 		//creazione casella per inserire il testo
 		searchBox = new JTextField();
-		searchBox.setBounds(116, 323, 528, 20);
+		searchBox.setBounds(126, 323, 528, 20);
 		contentPane.add(searchBox);
 
 		//creazione casella per inserire il testo
@@ -150,8 +150,8 @@ public class ClientGUI extends JFrame {
 		contentPane.add(lblStatus);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("client/google.png"));
-		lblNewLabel.setBounds(20, 120, 566, 192);
+		lblNewLabel.setIcon(new ImageIcon("client/google.gif"));
+		lblNewLabel.setBounds(153, 120, 470, 192);
 		contentPane.add(lblNewLabel);
 		setLocationRelativeTo(null);
 				
