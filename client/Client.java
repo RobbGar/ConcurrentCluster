@@ -16,6 +16,7 @@ public class Client implements IClient{
 	private ClientGUI GUI;
     private IServer server;
     private String serverIP;
+    private boolean valid = true;
     	
     public Client(ClientGUI guiReference, String IP) {
     	try {
@@ -25,6 +26,7 @@ public class Client implements IClient{
     			server = (IServer) r.lookup("REG");	
     		}
     	catch (RemoteException | NotBoundException e) {
+    		valid = false;
 			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (guiReference,"Server Offline"));
 			System.out.println("Server offline");
     	}
@@ -32,12 +34,13 @@ public class Client implements IClient{
     	
     @Override
     public boolean send(String text, String position) throws RemoteException {
-    	if (text.equals("") || position.equals("")) return false;
+    	if (!valid || text.equals("") || position.equals("")) return false;
     	return server.search(text, position);
     }
     	
     @Override
     public boolean showFrequents(String position) throws RemoteException{
+    	if (!valid) return false;
     	return(GUI.Update(server.MostSearchedW(position)));
     }
     	
