@@ -10,8 +10,8 @@ public class MyWorker extends SwingWorker<Boolean, Void> {
 	private ClientGUI gui;
 	private String pressed;
 	private IClient client;
-	public String position;
-	public String toFind;
+	private String position;
+	private String toFind;
 	
 	public MyWorker(ClientGUI gui, String pressed, IClient client, String position, String toFind) {
 		this.gui = gui;
@@ -25,7 +25,7 @@ public class MyWorker extends SwingWorker<Boolean, Void> {
 	protected Boolean doInBackground() throws Exception {
 		switch(pressed) {
 			case "search": return client.send(toFind, position);
-			case "showFrequents": return client.showFrequents();
+			case "showFrequents": return client.showFrequents(position);
 			default: throw new AssertionError(); 
 		}
 	}

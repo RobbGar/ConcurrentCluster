@@ -56,6 +56,7 @@ public class Server implements IServer{
 			res = f.get();
 		} catch (InterruptedException | ExecutionException e) {
 			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Searching for " + words));
+			//TODO remove debug trace
 			e.printStackTrace();
 		}
 		view.update("Searched " + words + " from " + location);
@@ -63,14 +64,14 @@ public class Server implements IServer{
 	}
 
 	@Override
-	public String MostSearchedW(){
-		Future<String> f = pool.submit(new CallPrint(data));
+	public String MostSearchedW(String location){
+		Future<String> f = pool.submit(new CallPrint(data, location));
 		String res = null;
 		try {
 			res = f.get();
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
-			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Requesting the most searched wordss "));
+			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Requesting the most searched words "));
 		} 
 		view.update("Requested the most searched words");
 		return res;

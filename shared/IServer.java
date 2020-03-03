@@ -6,5 +6,5 @@ import java.rmi.RemoteException;
 
 public interface IServer extends Serializable, Remote {
 	boolean search(String words, String location) throws RemoteException;
-	String MostSearchedW() throws RemoteException;
+	String MostSearchedW(String location) throws RemoteException;
 }

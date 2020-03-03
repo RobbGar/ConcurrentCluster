@@ -1,25 +1,14 @@
 package client;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 
-
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
 import java.awt.Font;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import shared.IClient;
-import javax.swing.ImageIcon;
 
 public class ClientGUI extends JFrame {
 
@@ -122,11 +111,24 @@ public class ClientGUI extends JFrame {
 		contentPane.add(locLabel);
 
 		//creazione bottone per stampa parole più frequenti
-		frequentsButton = new JButton("Show frequent words!");
+		frequentsButton = new JButton("Show frequent words");
 		frequentsButton.addActionListener(e -> {
-			if (!validIP(IP)) return;
-			(new MyWorker(guiReference, "showFrequents", client,null,null)).execute();
-		});
+			String s = (String)JOptionPane.showInputDialog(
+					this,
+					"Insert the location to choose",
+					"Show Frequent Words",
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					null,
+					"");
+
+			if ((s != null) && (s.length() > 0)) {
+				if (!validIP(IP)) return;
+				(new MyWorker(guiReference, "showFrequents", client,s,null)).execute();
+				}
+
+			});
+
 		frequentsButton.setBounds(20, 364, 187, 25);
 		contentPane.add(frequentsButton);
 				
@@ -144,7 +146,7 @@ public class ClientGUI extends JFrame {
 		lblStatus.setBounds(369, 4, 46, 14);
 		contentPane.add(lblStatus);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("client/google.png"));
 		lblNewLabel.setBounds(20, 120, 566, 192);
 		contentPane.add(lblNewLabel);
@@ -160,9 +162,6 @@ public class ClientGUI extends JFrame {
 	private boolean validIP(String ip){
 		Pattern pattern = Pattern.compile("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$|localhost");
 		Matcher m = pattern.matcher(ip);
-		if (!m.matches())
-			return false;
-		else
-			return true;
+		return (m.matches());
 	}
 }

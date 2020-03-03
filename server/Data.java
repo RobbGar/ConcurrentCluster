@@ -1,107 +1,90 @@
 package server;
 
+import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Data {
 
-    private String words;
-    private String location;
-    private static final int maxWords = 3;//numero delle parole, più frequenti per ogni città, da stampare
-    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> searches = new ConcurrentHashMap<>(); //hashMap che funziona da "database" in cui salviamo le parole cercate nei vari luoghi
-    private ConcurrentHashMap<String,ConcurrentHashMap<String,Integer>> mostSearchedWords = new ConcurrentHashMap<>();//usiamo per memorizzare le parole più frequenti
+    private ConcurrentHashMap<String, ConcurrentHashMap<String,Integer>> searches = new ConcurrentHashMap<>();
+    private static int totWords = 0; //Total words searched
 
-    public boolean search(String words, String location) {
-        this.location = normalize(location);
-        this.words = normalize(words);
-        if(this.location.isEmpty() || this.words.isEmpty())
-            return false;
-        store();
+    public synchronized static int getTotWords() {
+        return totWords;
+    }
+
+    public boolean search(String search, String location) throws IllegalArgumentException {
+        location = normalize(location);
+        search = normalize(search);
+        if(location.isEmpty() || search.isEmpty())
+            throw new IllegalArgumentException();
+        String [] split = search.split("\\s+");
+
+        ConcurrentHashMap<String, Integer> temp = searches.get(location);
+        if(temp == null) {
+            temp = new ConcurrentHashMap<>();
+            searches.put(location, temp);
+        }
+
+        for(String elem : split) {
+            Integer s = temp.get(elem);
+            if (s == null)
+                temp.put(elem, 1);
+            else {
+                //TODO not sure if thread safe
+                temp.replace(elem, s+1);
+            }
+            incrementTotWords();
+        }
         return true;
     }
 
-    private void store() {
-        ConcurrentHashMap<String, Integer> mapWords = new ConcurrentHashMap<>();
-        if(searches.putIfAbsent(location, mapWords)==null)
-            storeWords(mapWords);
-        else
-            storeWords(searches.get(location));
-    }
-
-    private void storeWords(ConcurrentHashMap<String, Integer> mapWords) {
-        String [] SplitW = words.split(" ");
-        for(String eachWord : SplitW) {
-            if(mapWords.putIfAbsent(eachWord, 1)!=null) {
-                incrementValue(mapWords, eachWord);
-            }
-            updateMSW(eachWord, mapWords.get(eachWord));
-        }
-    }
-
-    private synchronized void incrementValue(ConcurrentHashMap<String, Integer> mapWords, String key) {
-        int count = mapWords.get(key);
-        mapWords.replace(key, count+1);
-    }
-
-    private void updateMSW(String eachWord, int valueI) {
-        ConcurrentHashMap<String, Integer> MSWmapWords = new ConcurrentHashMap<>();
-        if(mostSearchedWords.putIfAbsent(location, MSWmapWords) == null)
-            updateWordsMSW(MSWmapWords, eachWord, valueI);
-        else
-            updateWordsMSW(mostSearchedWords.get(location), eachWord, valueI);
-    }
-
-    private synchronized void updateWordsMSW(ConcurrentHashMap<String, Integer> MSWmapWords, String eachWord, int valueI) {
-        if(MSWmapWords.size()<maxWords)
-            if(MSWmapWords.putIfAbsent(eachWord, valueI)==null)
-                return;
-        if(MSWmapWords.replace(eachWord, valueI)!=null)
-            return;
-        String wordMin=findMin(MSWmapWords);
-        int value = MSWmapWords.get(wordMin);
-        if(value < valueI) {
-            MSWmapWords.remove(wordMin, value);
-            MSWmapWords.put(eachWord, valueI);
-        }
-    }
-
-    private String findMin(ConcurrentHashMap<String, Integer> MSWmapWords){
-        int min = 0;
-        String wordMin = null;
-        boolean flag = true;
-        for (String W: MSWmapWords.keySet()){
-            if(flag) {
-                wordMin=W;
-                min=MSWmapWords.get(W);
-                flag=false;
-            }else{
-                int value = MSWmapWords.get(W);
-                if(value < min) {
-                    min = value;
-                    wordMin=W;
-                }
-            }
-        }
-        return wordMin;
+    private synchronized void incrementTotWords(){
+        this.totWords ++;
     }
 
     private String normalize(String s) {
-        if (s == null)
+        if (s.isEmpty())
             throw new IllegalArgumentException();
         s = s.replaceAll("(\\W)|(\\s+)", " ");
-        s = s.replaceAll("^\\s", "");
+        //TODO delete if everything works
+        //s = s.replaceAll("^\\s", "");
         s = s.toLowerCase();
         return s;
     }
 
-    public synchronized String MostSearchedW() {
+    public synchronized String MostSearchedW(String location) throws IllegalArgumentException{
+        location = normalize(location);
         String res = "";
-        for (String loc: mostSearchedWords.keySet()){ //
-            String value = mostSearchedWords.get(loc).toString();
-            value = value.replaceAll("=", ":");
-            value = value.replace("{", "[");
-            value = value.replace("}", "]");
-            res = res.concat(loc + ": " + value + ", ");
+        ConcurrentHashMap<String, Integer> temp = new ConcurrentHashMap<>(searches.get(location));
+        if (temp.isEmpty()) throw new IllegalArgumentException("Location not in the system");
+        int count = temp.size()<3 ? temp.size() : 3;
+        for(int i = 0; i < count ; ++i) {
+            String s = (Collections.max(temp.entrySet(), ConcurrentHashMap.Entry.comparingByValue()).getKey());
+            float r = temp.get(s);
+            float perc = ((r / totWords) * 100);
+            res += " " + s + " " + perc + "%" + "\n";
+            temp.remove(s);
+
         }
         return res;
+
     }
+
+    public static void main (String [] args){
+       /* Data s = new Data();
+        s.search("Ciao come     va in quel di di milano", "rapallo");
+        s.search("CIAO come MILANO MILANO MILANO", "rapallo");
+        s.search("cangioloni Giacomo", "Chiavari");
+        s.search("va quel cangioloni ciao ciao", "Rapallo");
+        try {
+            System.out.println(s.MostSearchedW("rapallo"));
+        }
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }*/
+       //TODO Remove Debug
+    }
+
+
+
 }

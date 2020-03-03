@@ -15,6 +15,7 @@ public class WRunnable implements Runnable {
 	this.clientSocket = requireNonNull(clientSocket);
 	this.serverRMI = requireNonNull(serverRMI) ;
 	}
+
 	@Override
 	public void run() {
 		try (PrintWriter output =  new PrintWriter( clientSocket.getOutputStream() , true );
@@ -47,8 +48,14 @@ public class WRunnable implements Runnable {
 	}
 
  	private void manageMostSearchedW (PrintWriter output , BufferedReader input){
+		try {
+			String location = input.readLine();
+			String str = serverRMI.MostSearchedW(location);
+			output.println(str);
+		}
+ 		catch(IOException e){
+ 			e.printStackTrace();
+ 		}
 
- 		String str = serverRMI.MostSearchedW();
- 		output.println(str);
  	}
  }
