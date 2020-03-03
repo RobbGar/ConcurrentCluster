@@ -1,5 +1,6 @@
 package server;
 
+import java.io.*;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,6 +56,7 @@ public class Data {
     public synchronized String MostSearchedW(String location) throws IllegalArgumentException{
         location = normalize(location);
         String res = "";
+        //TODO manage exception
         if (searches.get(location) == null) throw new IllegalArgumentException("Location not in the system");
         ConcurrentHashMap<String, Integer> temp = new ConcurrentHashMap<>(searches.get(location));
 
@@ -69,6 +71,40 @@ public class Data {
         }
         return res;
 
+    }
+
+    protected void save() {
+        try {
+            FileOutputStream fos =
+                    new FileOutputStream("hashmap.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(searches);
+            oos.close();
+            fos.close();
+            System.out.printf("Serialized HashMap data is saved in hashmap.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void load(){
+        try
+        {
+            FileInputStream fis = new FileInputStream("hashmap.json");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            searches = (ConcurrentHashMap) ois.readObject();
+            ois.close();
+            fis.close();
+        }catch(IOException ioe)
+        {
+            ioe.printStackTrace();
+            return;
+        }catch(ClassNotFoundException c)
+        {
+            System.out.println("Class not found");
+            c.printStackTrace();
+            return;
+        }
     }
 
     public static void main (String [] args){

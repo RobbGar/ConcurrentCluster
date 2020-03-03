@@ -22,6 +22,14 @@ public class Server implements IServer{
 	private ServerGUI view;
 	private Data data;
 
+	public void loadData(){
+		data.load();
+	}
+
+	public void saveData(){
+		data.save();
+	}
+
 	public Server(ServerGUI x) {
 		pool = Executors.newFixedThreadPool(5);
 		view = x;

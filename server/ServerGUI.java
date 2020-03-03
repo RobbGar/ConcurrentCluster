@@ -15,6 +15,16 @@ public class ServerGUI extends JFrame {
     private JLabel lblIndirizzoIpServer;
     private JLabel lblAddr;
 	private JButton exitBtn;
+	private JButton loadBtn;
+	private JButton saveBtn;
+
+	public JButton getLoadBtn() {
+		return loadBtn;
+	}
+
+	public JButton getSaveBtn() {
+		return saveBtn;
+	}
 
 	protected JButton getExitBtn() {
 		return exitBtn;
@@ -44,8 +54,16 @@ public class ServerGUI extends JFrame {
 		contentPane.add(lblIndirizzoIpServer);
 
 		exitBtn = new JButton("QUIT");
-		exitBtn.setBounds(360, 16, 100, 30);
+		exitBtn.setBounds(360, 16, 80, 30);
 		contentPane.add(exitBtn);
+
+		loadBtn = new JButton("LOAD");
+		loadBtn.setBounds(260, 16, 80, 30);
+		contentPane.add(loadBtn);
+
+		saveBtn = new JButton("SAVE");
+		saveBtn.setBounds(160, 16, 80, 30);
+		contentPane.add(saveBtn);
 		
 		textArea = new JTextArea(160, 250);
 		textArea.setBounds(22, 60, 458, 390);
