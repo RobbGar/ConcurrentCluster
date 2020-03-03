@@ -11,20 +11,20 @@ public class MyWorker extends SwingWorker<Boolean, Void> {
 	private String pressed;
 	private IClient client;
 	private String position;
-	private String toFind;
+	private String text;
 	
-	public MyWorker(ClientGUI gui, String pressed, IClient client, String position, String toFind) {
+	public MyWorker(ClientGUI gui, String pressed, IClient client, String position, String text) {
 		this.gui = gui;
 		this.pressed = pressed;
 		this.client = client;
 		this.position = position;
-		this.toFind = toFind;
+		this.text = text;
 	}
 	
 	@Override
 	protected Boolean doInBackground() throws Exception {
 		switch(pressed) {
-			case "search": return client.send(toFind, position);
+			case "search": return client.send(text, position);
 			case "showFrequents": return client.showFrequents(position);
 			default: throw new AssertionError(); 
 		}

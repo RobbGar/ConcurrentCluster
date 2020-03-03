@@ -29,6 +29,7 @@ public class ClientGUI extends JFrame {
     private JTextArea echoes; //echo box
     private JScrollPane scrollPane; //scroll
     private JButton frequentsButton; //Frequent-words button
+    private Panel panel_1;
     	
 	/**
 	 * Launch the application.
@@ -57,13 +58,13 @@ public class ClientGUI extends JFrame {
 		
 		Panel panel = new Panel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(596, 120, 74, 192);
+		panel.setBounds(624, 120, 46, 192);
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setIcon(new ImageIcon("client/google.gif"));
-		lblNewLabel.setBounds(116, 120, 480, 192);
+		lblNewLabel.setBounds(150, 120, 480, 192);
 		contentPane.add(lblNewLabel);
 		
 		IpAdress = new JLabel("Insert IP adress:");
@@ -100,17 +101,17 @@ public class ClientGUI extends JFrame {
 		textLabel.setBounds(10, 325, 86, 16);
 		contentPane.add(textLabel);
 				
-		//creazione casella per inserire il testo
+		//Search Box
 		searchBox = new JTextField();
 		searchBox.setBounds(116, 323, 554, 20);
 		contentPane.add(searchBox);
 
-		//creazione casella per inserire il testo
+		//Position Box
 		positionBox = new JTextField();
 		positionBox.setBounds(178, 89, 492, 20);
 		contentPane.add(positionBox);
 
-		//creazione bottone di ricerca
+		//Send! Button
 		searchButton = new JButton("Send");
 		searchButton.addActionListener(e -> {
 			if (!validIP(IP)) return;
@@ -126,7 +127,7 @@ public class ClientGUI extends JFrame {
 		locLabel.setBounds(10, 91, 260, 16);
 		contentPane.add(locLabel);
 
-		//creazione bottone per stampa parole più frequenti
+		//Frequent words
 		frequentsButton = new JButton("Show frequent words");
 		frequentsButton.addActionListener(e -> {
 			String s = (String)JOptionPane.showInputDialog(
@@ -143,13 +144,13 @@ public class ClientGUI extends JFrame {
 				(new MyWorker(guiReference, "showFrequents", client,s,null)).execute();
 				}
 			else
-				JOptionPane.showMessageDialog(this, "Insert a Valid location");
+				JOptionPane.showMessageDialog(this, "Insert a valid position");
 			});
 
 		frequentsButton.setBounds(228, 345, 187, 25);
 		contentPane.add(frequentsButton);
 				
-		//creazione area di testo con scrollbar
+		//Echoes + Scrollbar
 		echoes = new JTextArea(100, 10);
 		echoes.setTabSize(1);
 		echoes.setEditable(false);
@@ -161,6 +162,11 @@ public class ClientGUI extends JFrame {
 		JLabel lblStatus = new JLabel("Status :");
 		lblStatus.setBounds(10, 451, 46, 14);
 		contentPane.add(lblStatus);
+		
+		panel_1 = new Panel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(116, 120, 34, 192);
+		contentPane.add(panel_1);
 		setLocationRelativeTo(null);
 	}
 			
@@ -170,8 +176,10 @@ public class ClientGUI extends JFrame {
 	}
 	
 	private boolean validIP(String ip){
+		if ((ip != null) && (ip.length() > 0)) {
 		Pattern pattern = Pattern.compile("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$|localhost");
 		Matcher m = pattern.matcher(ip);
-		return (m.matches());
+		return (m.matches());}
+		return false;
 	}
 }

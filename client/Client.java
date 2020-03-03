@@ -37,8 +37,8 @@ public class Client implements IClient{
     }
     	
     @Override
-    public boolean showFrequents(String location) throws RemoteException{
-    	return(GUI.Update(server.MostSearchedW(location)));
+    public boolean showFrequents(String position) throws RemoteException{
+    	return(GUI.Update(server.MostSearchedW(position)));
     }
     	
 }
