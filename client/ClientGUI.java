@@ -66,13 +66,15 @@ public class ClientGUI extends JFrame {
 		IpButton = new JButton("Connect");
 		IpButton.addActionListener(arg0 -> {
 			 String ip = IpField.getText();
-			 if (validIP(ip)) {
-				 IP = ip;
-				 client = new Client(guiReference, IP);
+			 if (ip != null){
+			 	if(validIP(ip)) {
+					IP = ip;
+					client = new Client(guiReference, IP);
+				}
 			 }
-			 else {
+			 else
 				 JOptionPane.showMessageDialog(this, "Insert a Valid IP Address");
-			 }
+
 		});
 		IpButton.setBounds(454, 48, 111, 22);
 		contentPane.add(IpButton);
@@ -115,7 +117,7 @@ public class ClientGUI extends JFrame {
 		frequentsButton.addActionListener(e -> {
 			String s = (String)JOptionPane.showInputDialog(
 					this,
-					"Insert the location to choose",
+					"Insert the location",
 					"Show Frequent Words",
 					JOptionPane.PLAIN_MESSAGE,
 					null,
@@ -126,7 +128,8 @@ public class ClientGUI extends JFrame {
 				if (!validIP(IP)) return;
 				(new MyWorker(guiReference, "showFrequents", client,s,null)).execute();
 				}
-
+			else
+				JOptionPane.showMessageDialog(this, "Insert a Valid location");
 			});
 
 		frequentsButton.setBounds(20, 364, 187, 25);

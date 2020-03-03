@@ -55,8 +55,9 @@ public class Data {
     public synchronized String MostSearchedW(String location) throws IllegalArgumentException{
         location = normalize(location);
         String res = "";
+        if (searches.get(location) == null) throw new IllegalArgumentException("Location not in the system");
         ConcurrentHashMap<String, Integer> temp = new ConcurrentHashMap<>(searches.get(location));
-        if (temp.isEmpty()) throw new IllegalArgumentException("Location not in the system");
+
         int count = temp.size()<3 ? temp.size() : 3;
         for(int i = 0; i < count ; ++i) {
             String s = (Collections.max(temp.entrySet(), ConcurrentHashMap.Entry.comparingByValue()).getKey());
