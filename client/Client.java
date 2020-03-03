@@ -24,6 +24,7 @@ public class Client implements IClient{
     			this.serverIP = IP;
     			Registry r = LocateRegistry.getRegistry(serverIP,8080);
     			server = (IServer) r.lookup("REG");	
+    			GUI.messageField.setText("CONNECTED..");
     		}
     	catch (RemoteException | NotBoundException e) {
     		valid = false;
