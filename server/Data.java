@@ -53,7 +53,7 @@ public class Data{
         return s;
     }
 
-    public synchronized String MostSearchedW(String location) throws IllegalArgumentException{
+    synchronized String getTopThree(String location) throws IllegalArgumentException{
         location = normalize(location);
         String res = "";
         //TODO manage exception
@@ -73,7 +73,7 @@ public class Data{
 
     }
 
-    protected boolean save() {
+    boolean save() {
         reset();
         try {
             FileOutputStream fos =
@@ -95,7 +95,7 @@ public class Data{
         }
     }
 
-    protected boolean load(){
+    boolean load(){
         try
         {
             FileInputStream hm = new FileInputStream("server/data/hashmap.ser");
@@ -121,7 +121,7 @@ public class Data{
         }
     }
 
-    protected boolean reset(){
+    boolean reset(){
         File file = new File("server/data/hashmap.ser");
         File file1 = new File("server/data/totwords.ser");
         return file.delete() && file1.delete();
@@ -134,7 +134,7 @@ public class Data{
         s.search("cangioloni Giacomo", "Chiavari");
         s.search("va quel cangioloni ciao ciao", "Rapallo");
         try {
-            System.out.println(s.MostSearchedW("rapallo"));
+            System.out.println(s.getTopThree("rapallo"));
         }
         catch (IllegalArgumentException e){
             e.printStackTrace();
