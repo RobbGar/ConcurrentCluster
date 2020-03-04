@@ -11,7 +11,6 @@ import java.awt.Panel;
 public class ClientGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	protected ClientGUI guiReference = this;
 	private JPanel contentPane;
 	protected JLabel messageField;
 	private JTextField IpField;
@@ -54,7 +53,7 @@ public class ClientGUI extends JFrame {
 		SwingUtilities.invokeLater(() -> {
 			try {
 				ClientGUI frame = new ClientGUI();
-				Controller c = new Controller(frame);
+				new Controller(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
