@@ -3,27 +3,27 @@ package client;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-
+import java.awt.Color;
 import java.awt.Font;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.awt.Panel;
 
-import shared.IClient;
 
 public class ClientGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	protected ClientGUI guiReference = this;
 	private JPanel contentPane;
 	protected JLabel messageField;
-	private JButton frequentsButton; //Frequent-words button
 	private JTextField IpField;
     private JLabel IpAdress;
-	private JButton IpButton;
-	private JButton searchButton; //search button
-	protected JTextField searchBox; //search box
-	protected JTextField positionBox; //position box
+    private JButton IpButton;
+    private JButton searchButton; //search button
+    protected JTextField searchBox; //search box
+    protected JTextField positionBox; //position box
     private JTextArea echoes; //echo box
     private JScrollPane scrollPane; //scroll
+    private JButton frequentsButton; //Frequent-words button
+    private Panel panel_1;
 
 	/* Getters */
 	public JButton getFrequentsButton() {
@@ -62,8 +62,9 @@ public class ClientGUI extends JFrame {
 		});
 	}
 
+	
 	public ClientGUI() {
-
+	
 		setBounds(100, 100, 709, 497);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,81 +73,91 @@ public class ClientGUI extends JFrame {
 		ImageIcon img = new ImageIcon("ico.png");
 		setIconImage(img.getImage());
 		setResizable(false);
-
+		
+		Panel panel = new Panel();
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(624, 120, 46, 192);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBackground(Color.WHITE);
+		lblNewLabel.setIcon(new ImageIcon("client/google.gif"));
+		lblNewLabel.setBounds(150, 120, 480, 192);
+		contentPane.add(lblNewLabel);
+		
 		IpAdress = new JLabel("Insert IP adress:");
-		IpAdress.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		IpAdress.setFont(new Font("Dialog", Font.PLAIN, 15));
 		IpAdress.setBounds(10, 50, 260, 14);
 		contentPane.add(IpAdress);
-
+		
 		IpField = new JTextField();
-		IpField.setBounds(269, 49, 175, 20);
+		IpField.setBounds(178, 49, 371, 20);
 		contentPane.add(IpField);
 		IpField.setColumns(10);
 		IpField.setText("localhost");
 		IpButton = new JButton("Connect");
-
-		IpButton.setBounds(454, 48, 111, 22);
+		
+		IpButton.setBounds(559, 48, 111, 22);
 		contentPane.add(IpButton);
-
-		messageField = new JLabel("");
-		messageField.setBounds(425, 4, 258, 34);
+		
+		messageField = new JLabel("WAITING..");
+		messageField.setBounds(60, 448, 210, 20);
 		contentPane.add(messageField);
-
+				
 		JLabel textLabel = new JLabel("Search:");
-		textLabel.setBounds(20, 325, 86, 16);
+		textLabel.setBounds(10, 325, 86, 16);
 		contentPane.add(textLabel);
-
-		//creazione casella per inserire il testo
+				
+		//Search Box
 		searchBox = new JTextField();
-		searchBox.setBounds(126, 323, 528, 20);
+		searchBox.setBounds(116, 323, 554, 20);
 		contentPane.add(searchBox);
 
-		//creazione casella per inserire il testo
+		//Position Box
 		positionBox = new JTextField();
-		positionBox.setBounds(298, 89, 146, 20);
+		positionBox.setBounds(178, 89, 492, 20);
 		contentPane.add(positionBox);
 
-		//creazione bottone di ricerca
+		//Send! Button
 		searchButton = new JButton("Send");
-
-		searchButton.setBounds(533, 354, 111, 25);
+		
+		searchButton.setBounds(438, 345, 111, 25);
 		contentPane.add(searchButton);
 
 		JLabel locLabel = new JLabel("Where are you searching from?");
+		locLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		locLabel.setBounds(10, 91, 260, 16);
 		contentPane.add(locLabel);
 
-		//creazione bottone per stampa parole più frequenti
+		//Frequent words
 		frequentsButton = new JButton("Show frequent words");
+		
 
-
-		frequentsButton.setBounds(20, 364, 187, 25);
+		frequentsButton.setBounds(228, 345, 187, 25);
 		contentPane.add(frequentsButton);
-
-		//creazione area di testo con scrollbar
-		echoes = new JTextArea(1, 5);
+				
+		//Echoes + Scrollbar
+		echoes = new JTextArea(100, 10);
 		echoes.setTabSize(1);
 		echoes.setEditable(false);
 		scrollPane = new JScrollPane(echoes);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(20, 400, 650, 50);
+		scrollPane.setBounds(116, 380, 554, 50);
 		contentPane.add(scrollPane);
 
 		JLabel lblStatus = new JLabel("Status :");
-		lblStatus.setBounds(369, 4, 46, 14);
+		lblStatus.setBounds(10, 451, 46, 14);
 		contentPane.add(lblStatus);
-
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("client/google.gif"));
-		lblNewLabel.setBounds(153, 120, 470, 192);
-		contentPane.add(lblNewLabel);
+		
+		panel_1 = new Panel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(116, 120, 34, 192);
+		contentPane.add(panel_1);
 		setLocationRelativeTo(null);
 	}
-
+			
 	public boolean Update(String msg) {
 		SwingUtilities.invokeLater(() -> echoes.append(msg+"\n"));
 		return true;
 	}
-
-
 }

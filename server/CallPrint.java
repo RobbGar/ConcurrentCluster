@@ -13,6 +13,6 @@ public class CallPrint implements Callable<String> {
     }
     @Override
     public String call() {
-        return data.MostSearchedW(location);
+        return data.getTopThree(location);
     }
 }
