@@ -18,8 +18,9 @@ public class WRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		try (BufferedReader input = new BufferedReader (new InputStreamReader (clientSocket.getInputStream()))
-			){
+		try (PrintWriter output =  new PrintWriter( clientSocket.getOutputStream() , true );
+			 BufferedReader input = new BufferedReader (new InputStreamReader (clientSocket.getInputStream()));
+			 Socket client = clientSocket){
 				String command = input.readLine();
 				switch(command){
 					case "search":{
@@ -28,7 +29,7 @@ public class WRunnable implements Runnable {
 					}
 
  					case "showFrequents":{
- 						manageTopThreeWords(input);
+ 						manageTopThreeWords(input, output);
  						break;
  					}
  				}
@@ -44,6 +45,7 @@ public class WRunnable implements Runnable {
 		String location = input.readLine();
 		String searchedW = input.readLine();
 		serverRMI.search(searchedW, location);
+
 	}
 
  	private void manageTopThreeWords(BufferedReader input, PrintWriter output){
