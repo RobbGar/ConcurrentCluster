@@ -39,7 +39,7 @@ public class WRunnable implements Runnable {
 			}
 			
 	}
-	private void manageSearch(BufferedReader input, PrintWriter output) throws IOException{
+	private void manageSearch(BufferedReader input) throws IOException{
 
 		String location = input.readLine();
 		String searchedW = input.readLine();
