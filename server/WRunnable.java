@@ -27,7 +27,7 @@ public class WRunnable implements Runnable {
 						break;
 					}
 
- 					case "mostSearchedW":{
+ 					case "showFrequents":{
  						manageTopThreeWords(input);
  						break;
  					}
