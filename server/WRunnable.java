@@ -39,20 +39,20 @@ public class WRunnable implements Runnable {
 			}
 			
 	}
-	private void manageSearch(BufferedReader input) throws IOException{
+	private void manageSearch(BufferedReader input, PrintWriter output) throws IOException{
 
 		String location = input.readLine();
 		String searchedW = input.readLine();
 		serverRMI.search(searchedW, location);
 	}
 
- 	private void manageTopThreeWords(BufferedReader input){
+ 	private void manageTopThreeWords(BufferedReader input, PrintWriter output){
 		try {
 			String location = input.readLine();
-			String str = serverRMI.getTopThree(location);
+			output.println(serverRMI.getTopThree(location));
 		}
  		catch(IOException e){
- 			e.printStackTrace();
+ 			output.println("FAIL");
  		}
 
  	}
