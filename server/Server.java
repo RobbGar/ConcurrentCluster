@@ -15,10 +15,6 @@ public class Server implements IServer{
 
 	private static final long serialVersionUID = 1L;
 	private ExecutorService pool;
-
-	private ConcurrentHashMap<String,HashMap<String,Integer>> searches; //hashMap che funziona da "database" in cui salviamo le parole cercate nei vari luoghi
-	private ConcurrentHashMap<String,HashMap<String,Integer>> mostSearchedWords;      //hashmap per le 3 parole più cercate di ogni città M(ost)S(earched)W(ords)
-
 	private ServerGUI view;
 	private Data data;
 
@@ -37,8 +33,6 @@ public class Server implements IServer{
 	public Server(ServerGUI x) {
 		pool = Executors.newFixedThreadPool(5);
 		view = x;
-		searches = new ConcurrentHashMap<>();
-		mostSearchedWords = new ConcurrentHashMap<>();
 		data = new Data();
 		try {
 			Registry r;
@@ -62,7 +56,7 @@ public class Server implements IServer{
 
 	@Override
 	public boolean search(String words, String location){
-		Future<Boolean> f = pool.submit(new Search(words,location,data));
+		Future<Boolean> f = pool.submit(new Search(words, location, data));
 		Boolean res = false;
 		try {
 			res = f.get();
@@ -70,14 +64,15 @@ public class Server implements IServer{
 			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Searching for " + words));
 			//TODO remove debug trace
 			e.printStackTrace();
+			return false;
 		}
 		view.update("Searched " + words + " from " + location);
 		return res;
 	}
 
 	@Override
-	public String MostSearchedW(String location){
-		Future<String> f = pool.submit(new CallPrint(data, location));
+	public String getTopThree(String location){
+		Future<String> f = pool.submit(new TopThree(data, location));
 		String res = null;
 		try {
 			res = f.get();

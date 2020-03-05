@@ -42,7 +42,7 @@ public class Client implements IClient{
     @Override
     public boolean showFrequents(String position) throws RemoteException{
     	if (!valid) return false;
-    	return(GUI.Update(server.MostSearchedW(position)));
+    	return(GUI.Update(server.getTopThree(position)));
     }
     	
 }

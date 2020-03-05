@@ -18,18 +18,17 @@ public class WRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		try (PrintWriter output =  new PrintWriter( clientSocket.getOutputStream() , true );
-			BufferedReader input = new BufferedReader (new InputStreamReader (clientSocket.getInputStream()))
+		try (BufferedReader input = new BufferedReader (new InputStreamReader (clientSocket.getInputStream()))
 			){
 				String command = input.readLine();
 				switch(command){
 					case "search":{
-						manageResearch(output, input);
+						manageSearch(input);
 						break;
 					}
 
  					case "mostSearchedW":{
- 						manageMostSearchedW(output, input);
+ 						manageTopThreeWords(input);
  						break;
  					}
  				}
@@ -40,18 +39,17 @@ public class WRunnable implements Runnable {
 			}
 			
 	}
-	private void manageResearch (PrintWriter output , BufferedReader input) throws IOException{
+	private void manageSearch(BufferedReader input) throws IOException{
 
 		String location = input.readLine();
 		String searchedW = input.readLine();
-		boolean result = serverRMI.search(searchedW, location);
+		serverRMI.search(searchedW, location);
 	}
 
- 	private void manageMostSearchedW (PrintWriter output , BufferedReader input){
+ 	private void manageTopThreeWords(BufferedReader input){
 		try {
 			String location = input.readLine();
-			String str = serverRMI.MostSearchedW(location);
-			output.println(str);
+			String str = serverRMI.getTopThree(location);
 		}
  		catch(IOException e){
  			e.printStackTrace();

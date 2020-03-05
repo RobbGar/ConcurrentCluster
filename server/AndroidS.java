@@ -11,21 +11,21 @@ import server.Server;
 
 public class AndroidS {
 	private volatile boolean stop;
-	private  int numPort ;
-	protected ServerSocket listener ;
-	protected ExecutorService serverPool;
-	protected Server serverRMI;
+	private int numPort;
+	private ServerSocket listener;
+	private ExecutorService serverPool;
+	private Server serverRMI;
 	
-	public AndroidS(int numPort , Server serverRMI){
+	public AndroidS(int numPort, Server serverRMI){
 		this.serverRMI = serverRMI;
 		this.numPort = numPort;
 		serverPool = Executors.newFixedThreadPool(5);
-	
+		this.stop = false;
 		try {
 			listener = new ServerSocket(this.numPort);
 			listener.setSoTimeout(5000);
 		} catch (IOException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	
@@ -38,18 +38,20 @@ public class AndroidS {
 			try {
 				clientSocket = listener.accept();
 				System.out.println("Ho appena eseguito workerRunnable da android server");
-				this.serverPool.execute( new WRunnable(clientSocket , serverRMI));
+				this.serverPool.execute( new WRunnable(clientSocket, serverRMI));
 				}
-			catch(SocketTimeoutException e) {  }
+			catch(SocketTimeoutException e) {
+				//TODO remove debug
+			}
 			catch (IOException e) { throw new RuntimeException("Errore", e);}
 			
 			}
 		closeServer();
-		System.out.println("AndroidServer terminato!");
+		System.out.println("AndroidServer terminato");
 		
 	}
 	
-	public void closeServer() {
+	private void closeServer() {
 		try {
 			listener.close();
 		} catch (IOException e) {
@@ -67,9 +69,4 @@ public class AndroidS {
 			ie.printStackTrace();
 		}	
 	}
-	
-	public void stopServer(){
-		stop = true;
-	}
-
 }

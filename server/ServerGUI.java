@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 
 public class ServerGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private ServerGUI guiReference = this;
 	protected Server server;
 	private JPanel contentPane;
 	private JTextArea textArea;
@@ -18,15 +17,15 @@ public class ServerGUI extends JFrame {
 	private JButton loadBtn;
 	private JButton saveBtn;
 
-	public JButton getLoadBtn() {
+	JButton getLoadBtn() {
 		return loadBtn;
 	}
 
-	public JButton getSaveBtn() {
+	JButton getSaveBtn() {
 		return saveBtn;
 	}
 
-	protected JButton getRstBtn() {
+	JButton getRstBtn() {
 		return rstBtn;
 	}
 
@@ -70,23 +69,11 @@ public class ServerGUI extends JFrame {
 		contentPane.add(textArea);
 		textArea.setEditable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		server  = new Server(guiReference);
     }
-		
-    protected void update(String msg) {
+
+    void update(String msg) {
 		SwingUtilities.invokeLater(() -> textArea.append(msg+"\n"));
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				ServerGUI frame = new ServerGUI();
-				Controller c = new Controller(frame);
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
+
 }
     

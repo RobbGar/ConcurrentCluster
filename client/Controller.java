@@ -19,44 +19,6 @@ public class Controller {
 
     private void initController(){
 
-        view.getIpButton().addActionListener(arg0 -> {
-            String ip = view.getIpField().getText();
-            if (ip != null){
-                if(validIP(ip)) {
-                    IP = ip;
-                    client = new Client(view, IP);
-                }
-            }
-            else
-                JOptionPane.showMessageDialog(view, "Insert a Valid IP Address");
-
-        });
-
-        view.getSearchButton().addActionListener(e -> {
-            if (!validIP(IP)) return;
-            String text = view.getSearchBox().getText();
-            String position = view.getPositionBox().getText();
-            (new MyWorker(view, "search", client, position, text)).execute();
-        });
-
-        view.getFrequentsButton().addActionListener(e -> {
-            String s = (String)JOptionPane.showInputDialog(
-                    view,
-                    "Insert the location",
-                    "Show Frequent Words",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    "");
-
-            if ((s != null) && (s.length() > 0)) {
-                if (!validIP(IP)) return;
-                (new MyWorker(view, "showFrequents", client,s,null)).execute();
-            }
-            else
-                JOptionPane.showMessageDialog(view, "Insert a Valid location");
-        });
-
         view.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 System.exit(0);

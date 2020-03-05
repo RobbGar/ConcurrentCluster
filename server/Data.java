@@ -60,7 +60,7 @@ public class Data{
         if (searches.get(location) == null) throw new IllegalArgumentException("Location not in the system");
         ConcurrentHashMap<String, Integer> temp = new ConcurrentHashMap<>(searches.get(location));
 
-        int count = temp.size()<3 ? temp.size() : 3;
+        int count = temp.size() < 3 ? temp.size() : 3;
         for(int i = 0; i < count ; ++i) {
             String s = (Collections.max(temp.entrySet(), ConcurrentHashMap.Entry.comparingByValue()).getKey());
             float r = temp.get(s);
@@ -109,12 +109,10 @@ public class Data{
             ois1.close();
             hm.close();
             return true;
-        }catch(IOException ioe)
-        {
+        }catch(IOException ioe){
             ioe.printStackTrace();
             return false;
-        }catch(ClassNotFoundException c)
-        {
+        }catch(ClassNotFoundException c) {
             System.out.println("Class not found");
             c.printStackTrace();
             return false;
@@ -122,6 +120,7 @@ public class Data{
     }
 
     boolean reset(){
+        searches = new ConcurrentHashMap<>();
         File file = new File("server/data/hashmap.ser");
         File file1 = new File("server/data/totwords.ser");
         return file.delete() && file1.delete();

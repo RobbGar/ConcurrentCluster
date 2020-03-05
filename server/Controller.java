@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -45,4 +46,15 @@ public class Controller {
         });
     }
 
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                ServerGUI frame = new ServerGUI();
+                Controller c = new Controller(frame);
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

@@ -2,12 +2,12 @@ package server;
 
 import java.util.concurrent.Callable;
 
-public class CallPrint implements Callable<String> {
+public class TopThree implements Callable<String> {
 
     private Data data;
     private String location;
 
-    public CallPrint(Data database, String location) {
+    public TopThree(Data database, String location) {
         this.data = database;
         this.location = location;
     }
