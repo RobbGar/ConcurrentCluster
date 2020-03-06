@@ -55,18 +55,18 @@ public class Server implements IServer{
 	}
 
 	@Override
-	public boolean search(String words, String location){
-		Future<Boolean> f = pool.submit(new Search(words, location, data));
+	public boolean search(String s, String location){
+		Future<Boolean> f = pool.submit(new Search(s, location, data));
 		Boolean res = false;
 		try {
 			res = f.get();
 		} catch (InterruptedException | ExecutionException e) {
-			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Searching for " + words));
+			view.update("Error searching for " + s);
+			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Searching for " + s));
 			//TODO remove debug trace
 			e.printStackTrace();
-			return false;
 		}
-		view.update("Searched " + words + " from " + location);
+		view.update("Searched " + s + " from " + location);
 		return res;
 	}
 
@@ -78,7 +78,7 @@ public class Server implements IServer{
 			res = f.get();
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
-			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Requesting the most searched words "));
+			view.update("Error requesting the most searched words");
 		}
 		catch (IllegalArgumentException e){
 			view.update(e.getMessage());

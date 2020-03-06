@@ -19,8 +19,8 @@ public class WRunnable implements Runnable {
 	@Override
 	public void run() {
 		try (PrintWriter output =  new PrintWriter( clientSocket.getOutputStream() , true );
-			 BufferedReader input = new BufferedReader (new InputStreamReader (clientSocket.getInputStream()));
-			 Socket client = clientSocket){
+			 BufferedReader input = new BufferedReader (new InputStreamReader (clientSocket.getInputStream()))
+			 ){
 				String command = input.readLine();
 				switch(command){
 					case "search":{

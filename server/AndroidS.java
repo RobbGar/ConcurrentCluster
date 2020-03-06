@@ -7,7 +7,6 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import server.Server;
 
 public class AndroidS {
 	private volatile boolean stop;
@@ -21,6 +20,7 @@ public class AndroidS {
 		this.numPort = numPort;
 		serverPool = Executors.newFixedThreadPool(5);
 		this.stop = false;
+
 		try {
 			listener = new ServerSocket(this.numPort);
 			listener.setSoTimeout(5000);
@@ -37,17 +37,15 @@ public class AndroidS {
 			Socket clientSocket;
 			try {
 				clientSocket = listener.accept();
-				System.out.println("Ho appena eseguito workerRunnable da android server");
 				this.serverPool.execute( new WRunnable(clientSocket, serverRMI));
 				}
 			catch(SocketTimeoutException e) {
-				//TODO remove debug
+
 			}
 			catch (IOException e) { throw new RuntimeException("Errore", e);}
 			
 			}
 		closeServer();
-		System.out.println("AndroidServer terminato");
 		
 	}
 	
@@ -55,7 +53,7 @@ public class AndroidS {
 		try {
 			listener.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+
 		}
 		
 		serverPool.shutdown(); 
