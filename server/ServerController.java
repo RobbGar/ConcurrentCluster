@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerController {
     private ServerGUI view;
@@ -44,7 +46,21 @@ public class ServerController {
             }
         });
 
-        view.getExit().addActionListener(e -> System.exit(0));
+        view.getExit().addActionListener(e -> {
+            try {
+                FileOutputStream fos =
+                        new FileOutputStream("server/data/settings.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(view.getAutosave().getState());
+                oos.close();
+                fos.close();
+            }
+            catch(IOException ex){
+            }
+            if (view.getAutosave().getState())
+                server.saveData();
+            System.exit(0);
+        });
 
         view.getInfoItem().addActionListener(e ->
                 JOptionPane.showMessageDialog(view,
@@ -61,6 +77,7 @@ public class ServerController {
                         view.update("Reset data");
                 }
         );
+
         view.getLoad().addActionListener(e -> {
                     if (server.loadData())
                         view.update("Data loaded");
@@ -78,7 +95,44 @@ public class ServerController {
 
         view.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
+
+                    try {
+                        FileOutputStream fos =
+                                new FileOutputStream("server/data/settings.ser");
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(view.getAutosave().getState());
+                        oos.close();
+                        fos.close();
+                    }
+                    catch(IOException e){
+
+                    }
+                if (view.getAutosave().getState()){
+                    server.saveData();
+                    System.out.println("qua");
+                }
+
                 System.exit(0);
+            }
+        });
+        view.addWindowListener(new WindowAdapter() {
+            public void windowOpened(WindowEvent we) {
+                boolean res = false;
+                try {
+                    FileInputStream hm = new FileInputStream("server/data/settings.ser");
+                    ObjectInputStream ois = new ObjectInputStream(hm);
+                    res = (Boolean) ois.readObject();
+                    ois.close();
+                    hm.close();
+                }
+                catch (IOException | ClassNotFoundException e){
+
+                }
+                view.getAutosave().setState(res);
+
+                if(res)
+                    server.loadData();
+
             }
         });
     }

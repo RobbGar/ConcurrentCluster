@@ -15,12 +15,6 @@ public class ServerGUI extends JFrame {
 	private JTextArea textArea;
 	private JLabel lblIndirizzoIpServer;
 	private JLabel lblAddr;
-
-
-	public JMenuBar getMenuBarr() {
-		return menuBar;
-	}
-
 	private JMenuBar menuBar;
 	private JMenu file;
 	private JMenu settings;
@@ -31,52 +25,47 @@ public class ServerGUI extends JFrame {
 	private JMenuItem save;
 	private JMenuItem load;
 	private JMenuItem reset;
-	private JMenuItem settingsItem;
+	private JMenu settingsItem;
 	private ButtonGroup bg;
 	private JRadioButtonMenuItem lightMode;
 	private JRadioButtonMenuItem darkMode;
+	private JCheckBoxMenuItem autosave;
+
 
 	/*Getters*/
 	public JTextArea getTextArea() {
 		return textArea;
 	}
-
 	public JLabel getLblIndirizzoIpServer() {
 		return lblIndirizzoIpServer;
 	}
-
 	public JLabel getLblAddr() {
 		return lblAddr;
 	}
-
 	public JMenuItem getInfoItem() {
 		return infoItem;
 	}
-
 	public JMenuItem getExit() {
 		return exit;
 	}
-
 	public JMenuItem getSave() {
 		return save;
 	}
-
 	public JMenuItem getLoad() {
 		return load;
 	}
-
 	public JMenuItem getReset() {
 		return reset;
 	}
-
 	public JRadioButtonMenuItem getLightMode() {
 		return lightMode;
 	}
-
 	public JRadioButtonMenuItem getDarkMode() {
 		return darkMode;
 	}
-
+	public JCheckBoxMenuItem getAutosave() {
+		return autosave;
+	}
 
 	public ServerGUI() throws UnknownHostException {
 		setBounds(100, 100, 512, 497);
@@ -105,7 +94,10 @@ public class ServerGUI extends JFrame {
 
 		//Settings Menu
 		settings = new JMenu("Settings");
-		settingsItem = new JMenuItem("Preferences", new ImageIcon("server/resources/settings.png"));
+		settingsItem = new JMenu("Preferences");
+
+		autosave = new JCheckBoxMenuItem("Autosave on launch and closure");
+		settingsItem.add(autosave);
 
 		settings.setMnemonic(KeyEvent.VK_F);
 		settingsItem.setMnemonic(KeyEvent.VK_E);
@@ -140,7 +132,7 @@ public class ServerGUI extends JFrame {
 
 		/*End of Menu bar*/
 
-		ImageIcon icon = new ImageIcon("ico.png");
+		ImageIcon icon = new ImageIcon("server/resources/ico.png");
 		setIconImage(icon.getImage());
 		setResizable(false);
 		contentPane = new JPanel();
@@ -162,7 +154,7 @@ public class ServerGUI extends JFrame {
 		contentPane.add(lblIndirizzoIpServer);
 
 		textArea = new JTextArea(160, 250);
-		textArea.setBounds(22, 40, 458, 390);
+		textArea.setBounds(22, 40, 446, 390);
 		contentPane.add(textArea);
 		textArea.setEditable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
