@@ -12,6 +12,7 @@ public class WRunnable implements Runnable {
 	private Server serverRMI;
 	
 	public WRunnable(Socket clientSocket, Server serverRMI) {
+
 	this.clientSocket = requireNonNull(clientSocket);
 	this.serverRMI = requireNonNull(serverRMI) ;
 	}
