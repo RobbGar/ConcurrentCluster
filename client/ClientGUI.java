@@ -23,8 +23,12 @@ public class ClientGUI extends JFrame {
     private JScrollPane scrollPane; //scroll
     private JButton frequentsButton; //Frequent-words button
     private Panel panel_1;
+    private JButton btnLocateMe;
 
 	/* Getters */
+    public JButton getLocateMeButton() {
+		return btnLocateMe;
+	}    
 	public JButton getFrequentsButton() {
 		return frequentsButton;
 	}
@@ -114,7 +118,7 @@ public class ClientGUI extends JFrame {
 
 		//Position Box
 		positionBox = new JTextField();
-		positionBox.setBounds(178, 89, 492, 20);
+		positionBox.setBounds(178, 89, 371, 20);
 		contentPane.add(positionBox);
 
 		//Send! Button
@@ -152,6 +156,10 @@ public class ClientGUI extends JFrame {
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(116, 120, 34, 192);
 		contentPane.add(panel_1);
+		
+		btnLocateMe = new JButton("Locate me!");
+		btnLocateMe.setBounds(559, 88, 111, 23);
+		contentPane.add(btnLocateMe);
 		setLocationRelativeTo(null);
 	}
 			
