@@ -23,6 +23,15 @@ public class ClientGUI extends JFrame {
     private JScrollPane scrollPane; //scroll
     private JButton frequentsButton; //Frequent-words button
     private Panel panel_1;
+    private JMenuBar menuBar;
+    private JMenu file;
+    private JMenu settings;
+    private JMenu info;
+    private JMenuItem infoItem;
+    private JMenuItem exit;
+
+
+	private JCheckBoxMenuItem debugMode;
 
 	/* Getters */
 	public JButton getFrequentsButton() {
@@ -43,6 +52,16 @@ public class ClientGUI extends JFrame {
 	public JButton getSearchButton() {
 		return searchButton;
 	}
+	public JMenuItem getInfoItem() {
+		return infoItem;
+	}
+	public JMenuItem getExit() {
+		return exit;
+	}
+	public JCheckBoxMenuItem getDebugMode() {
+		return debugMode;
+	}
+
 
 
 
@@ -72,7 +91,30 @@ public class ClientGUI extends JFrame {
 		ImageIcon img = new ImageIcon("ico.png");
 		setIconImage(img.getImage());
 		setResizable(false);
-		
+
+		/* Menu Bar*/
+
+		menuBar = new JMenuBar();
+		file = new JMenu("File");
+		exit = new JMenuItem("Exit");
+		file.add(exit);
+		menuBar.add(file);
+
+		settings = new JMenu("Settings");
+		debugMode = new JCheckBoxMenuItem("Debug Mode");
+		settings.add(debugMode);
+		menuBar.add(settings);
+
+		info = new JMenu("Info");
+		infoItem = new JMenuItem("Info");
+		info.add(infoItem);
+		menuBar.add(Box.createHorizontalGlue());
+		menuBar.add(info);
+
+		setJMenuBar(menuBar);
+
+		/*End of Menu Bar*/
+
 		Panel panel = new Panel();
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(624, 120, 46, 192);

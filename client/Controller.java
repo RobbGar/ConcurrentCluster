@@ -62,6 +62,16 @@ public class Controller {
 			else
 				JOptionPane.showMessageDialog(view, "Insert a valid position");
 			});
+
+		view.getInfoItem().addActionListener(e ->
+				JOptionPane.showMessageDialog(view,
+						"Created by Roberto Garbarino, NotMyUid & Cristiano Olivari",
+						"Info",
+						JOptionPane.PLAIN_MESSAGE,
+						new ImageIcon("server/resources/ico.png")
+				));
+
+		view.getExit().addActionListener(e -> System.exit(0));
     }
 
     private boolean validIP(String ip){

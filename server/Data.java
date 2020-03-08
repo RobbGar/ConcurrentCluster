@@ -66,7 +66,6 @@ public class Data{
             float perc = ((r / totwords) * 100);
             res += " " + s + " " + perc + "%" + "\n";
             temp.remove(s);
-
         }
         return res;
 
