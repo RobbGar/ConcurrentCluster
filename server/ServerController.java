@@ -95,7 +95,6 @@ public class ServerController {
 
         view.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
-
                     try {
                         FileOutputStream fos =
                                 new FileOutputStream("server/data/settings.ser");

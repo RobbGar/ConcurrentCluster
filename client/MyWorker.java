@@ -50,9 +50,10 @@ public class MyWorker extends SwingWorker<Boolean, Void> {
 			else if (!result) gui.messageField.setText("A FIELD IS MISSING!");
 				else{
 					gui.messageField.setText("HERE WE ARE ;)");
-					if(!gui.getDebugMode().getState()) {
+					boolean debug = gui.getDebugMode().getState();
+					if(!debug) {
 						try {
-							String search = "#q=" + gui.searchBox.getText().toString().trim();
+							String search = "#q=" + gui.searchBox.getText().trim();
 							search = search.replaceAll(" ", "+");
 							String url = "http:////www.google.com//" + search;
 							java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));

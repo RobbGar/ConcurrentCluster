@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="io.ipinfo:ipinfo-api:1.1" type="repository">
+    <properties maven-id="io.ipinfo:ipinfo-api:1.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/ipinfo/ipinfo-api/1.1/ipinfo-api-1.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.9.0/okhttp-3.9.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/okio/okio/1.13.0/okio-1.13.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
