@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
 import java.util.concurrent.*;
 
 import shared.IServer;
@@ -41,7 +40,7 @@ public class Server implements IServer{
 			} catch (RemoteException e) {
 				r = LocateRegistry.getRegistry(8080);
 			}
-			IServer stubRequest = (IServer) UnicastRemoteObject.exportObject( this,0);
+			IServer stubRequest = (IServer) UnicastRemoteObject.exportObject(this,0);
 			r.rebind("REG", stubRequest);
 
 			AndroidS androidS = new AndroidS(5005,this);
@@ -71,8 +70,10 @@ public class Server implements IServer{
 	}
 
 	@Override
-	public String getTopThree(String location){
+	public String getTopThree(String location) throws IllegalArgumentException{
+
 		Future<String> f = pool.submit(new TopThree(data, location));
+
 		String res = null;
 		try {
 			res = f.get();
@@ -81,8 +82,9 @@ public class Server implements IServer{
 			view.update("Error requesting the most searched words");
 		}
 		catch (IllegalArgumentException e){
-			view.update(e.getMessage());
+			view.update("Location requested not in the system");
 		}
+
 		view.update("Requested the most searched words");
 		return res;
 	}

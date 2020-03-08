@@ -100,21 +100,16 @@ public class Data{
         {
             FileInputStream hm = new FileInputStream("server/data/hashmap.ser");
             ObjectInputStream ois = new ObjectInputStream(hm);
-            FileInputStream tw = new FileInputStream("server/data/totwords.ser");
-            ObjectInputStream ois1 = new ObjectInputStream(tw);
             searches = (ConcurrentHashMap<String, ConcurrentHashMap<String, Integer>>) ois.readObject();
-            totWords = (ConcurrentHashMap<String, Integer>) ois1.readObject();
             ois.close();
-            tw.close();
-            ois1.close();
+            hm.close();
+            hm = new FileInputStream("server/data/totwords.ser");
+            ois = new ObjectInputStream(hm);
+            totWords = (ConcurrentHashMap<String, Integer>) ois.readObject();
+            ois.close();
             hm.close();
             return true;
-        }catch(IOException ioe){
-            ioe.printStackTrace();
-            return false;
-        }catch(ClassNotFoundException c) {
-            System.out.println("Class not found");
-            c.printStackTrace();
+        }catch(ClassNotFoundException | IOException ioe){
             return false;
         }
     }
@@ -126,22 +121,4 @@ public class Data{
         File file1 = new File("server/data/totwords.ser");
         return file.delete() && file1.delete();
     }
-
-    public static void main (String [] args){
-       /* Data s = new Data();
-        s.search("Ciao come     va in quel di di milano", "rapallo");
-        s.search("CIAO come MILANO MILANO MILANO", "rapallo");
-        s.search("cangioloni Giacomo", "Chiavari");
-        s.search("va quel cangioloni ciao ciao", "Rapallo");
-        try {
-            System.out.println(s.getTopThree("rapallo"));
-        }
-        catch (IllegalArgumentException e){
-            e.printStackTrace();
-        }*/
-       //TODO Remove Debug
-    }
-
-
-
 }

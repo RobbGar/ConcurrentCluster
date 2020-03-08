@@ -1,21 +1,18 @@
 package server;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerController {
     private ServerGUI view;
     private Server server;
 
 
-    private ServerController(ServerGUI v){
+    ServerController(ServerGUI v){
         view = v;
         initController();
     }
@@ -132,19 +129,6 @@ public class ServerController {
                 if(res)
                     server.loadData();
 
-            }
-        });
-    }
-
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                ServerGUI frame = new ServerGUI();
-                ServerController c = new ServerController(frame);
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }

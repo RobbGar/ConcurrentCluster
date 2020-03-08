@@ -39,6 +39,7 @@ public class AndroidS {
 				clientSocket = listener.accept();
 				this.serverPool.execute( new WRunnable(clientSocket, serverRMI));
 				}
+
 			catch(SocketTimeoutException e) {
 
 			}

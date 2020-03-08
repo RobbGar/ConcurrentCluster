@@ -12,7 +12,7 @@ public class TopThree implements Callable<String> {
         this.location = location;
     }
     @Override
-    public String call() {
+    public String call() throws IllegalArgumentException{
         return data.getTopThree(location);
     }
 }

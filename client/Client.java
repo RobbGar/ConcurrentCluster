@@ -42,7 +42,19 @@ public class Client implements IClient{
     @Override
     public boolean showFrequents(String position) throws RemoteException{
     	if (!valid) return false;
-    	return(GUI.Update(server.getTopThree(position)));
+    	String res = server.getTopThree(position);
+    	if (res != null){
+    		GUI.Update(res);
+			return true;
+		}
+
+    	JOptionPane.showMessageDialog(GUI,
+				"Location not in the System",
+				"Error",
+				JOptionPane.ERROR_MESSAGE
+		);
+    	return false;
+
     }
     	
 }

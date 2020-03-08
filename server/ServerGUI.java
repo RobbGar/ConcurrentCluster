@@ -4,7 +4,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyEvent;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
