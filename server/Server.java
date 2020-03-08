@@ -70,7 +70,7 @@ public class Server implements IServer{
 	}
 
 	@Override
-	public String getTopThree(String location) throws IllegalArgumentException{
+	public String getTopThree(String location){
 
 		Future<String> f = pool.submit(new TopThree(data, location));
 

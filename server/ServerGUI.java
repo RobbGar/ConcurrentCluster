@@ -29,6 +29,7 @@ public class ServerGUI extends JFrame {
 	private JRadioButtonMenuItem lightMode;
 	private JRadioButtonMenuItem darkMode;
 	private JCheckBoxMenuItem autosave;
+	private JScrollPane scrollPane;
 
 
 	/*Getters*/
@@ -72,7 +73,8 @@ public class ServerGUI extends JFrame {
 
 		/*Beginning Menu Bar*/
 		menuBar = new JMenuBar();
-			//File menu with save load and reset options
+
+		//File menu with save load and reset options
 		file = new JMenu("File");
 		save = new JMenuItem("Save data", new ImageIcon("server/resources/save.png"));
 		load = new JMenuItem("Load data", new ImageIcon("server/resources/load.png"));
@@ -153,8 +155,10 @@ public class ServerGUI extends JFrame {
 		contentPane.add(lblIndirizzoIpServer);
 
 		textArea = new JTextArea(160, 250);
-		textArea.setBounds(22, 40, 446, 390);
-		contentPane.add(textArea);
+		scrollPane = new JScrollPane(textArea);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(22, 40, 446, 390);
+		contentPane.add(scrollPane);
 		textArea.setEditable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -162,6 +166,15 @@ public class ServerGUI extends JFrame {
     void update(String msg) {
 		SwingUtilities.invokeLater(() -> textArea.append(msg+"\n"));
 	}
+	void resetTextBar(){
+		textArea = new JTextArea(160, 250);
 
+		contentPane.remove(scrollPane);
+		scrollPane = new JScrollPane(textArea);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(22, 40, 446, 390);
+		contentPane.add(scrollPane);
+		textArea.setEditable(false);
+	}
 }
     

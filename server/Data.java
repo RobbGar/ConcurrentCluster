@@ -51,11 +51,11 @@ public class Data{
         return s;
     }
 
-    synchronized String getTopThree(String location) throws IllegalArgumentException{
+    synchronized String getTopThree(String location){
         location = normalize(location);
         String res = "";
         //TODO manage exception
-        if (searches.get(location) == null) throw new IllegalArgumentException("Location not in the system");
+        if (searches.get(location) == null) return null;
         ConcurrentHashMap<String, Integer> temp = new ConcurrentHashMap<>(searches.get(location));
 
         int count = temp.size() < 3 ? temp.size() : 3;

@@ -45,7 +45,7 @@ public class AndroidS {
 			}
 			catch (IOException e) { throw new RuntimeException("Errore", e);}
 			
-			}
+		}
 		closeServer();
 		
 	}

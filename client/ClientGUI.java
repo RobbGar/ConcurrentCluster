@@ -14,28 +14,28 @@ public class ClientGUI extends JFrame {
 	private JPanel contentPane;
 	protected JLabel messageField;
 	private JTextField IpField;
-    private JLabel IpAdress;
-    private JButton IpButton;
-    private JButton searchButton; //search button
-    protected JTextField searchBox; //search box
-    protected JTextField positionBox; //position box
-    private JTextArea echoes; //echo box
-    private JScrollPane scrollPane; //scroll
-    private JButton frequentsButton; //Frequent-words button
-    private Panel panel_1;
-    private JButton btnLocateMe;
-    private JMenuBar menuBar;
-    private JMenu file;
-    private JMenu settings;
-    private JMenu info;
-    private JMenuItem infoItem;
-    private JMenuItem exit;
+	private JLabel IpAdress;
+	private JButton IpButton;
+	private JButton searchButton; //search button
+	protected JTextField searchBox; //search box
+	protected JTextField positionBox; //position box
+	private JTextArea echoes; //echo box
+	private JScrollPane scrollPane; //scroll
+	private JButton frequentsButton; //Frequent-words button
+	private Panel panel_1;
+	private JButton btnLocateMe;
+	private JMenuBar menuBar;
+	private JMenu file;
+	private JMenu settings;
+	private JMenu info;
+	private JMenuItem infoItem;
+	private JMenuItem exit;
 
 
 	private JCheckBoxMenuItem debugMode;
 
 	/* Getters */
-    public JButton getLocateMeButton() {
+	public JButton getLocateMeButton() {
 		return btnLocateMe;
 	}
 	public JButton getFrequentsButton() {
@@ -67,32 +67,14 @@ public class ClientGUI extends JFrame {
 	}
 
 
-
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			try {
-				ClientGUI frame = new ClientGUI();
-				new Controller(frame);
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
-	
 	public ClientGUI() {
-	
-		setBounds(100, 100, 709, 497);
+
+		setBounds(100, 100, 709, 528);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		ImageIcon img = new ImageIcon("ico.png");
+		ImageIcon img = new ImageIcon("client/resources/ico.png");
 		setIconImage(img.getImage());
 		setResizable(false);
 
@@ -123,36 +105,36 @@ public class ClientGUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(624, 120, 46, 192);
 		contentPane.add(panel);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setIcon(new ImageIcon("client/google.gif"));
+		lblNewLabel.setIcon(new ImageIcon("client/resources/google.gif"));
 		lblNewLabel.setBounds(150, 120, 480, 192);
 		contentPane.add(lblNewLabel);
-		
+
 		IpAdress = new JLabel("Insert IP adress:");
 		IpAdress.setFont(new Font("Dialog", Font.PLAIN, 15));
 		IpAdress.setBounds(10, 50, 260, 14);
 		contentPane.add(IpAdress);
-		
+
 		IpField = new JTextField();
 		IpField.setBounds(178, 49, 371, 20);
 		contentPane.add(IpField);
 		IpField.setColumns(10);
 		IpField.setText("localhost");
 		IpButton = new JButton("Connect");
-		
+
 		IpButton.setBounds(559, 48, 111, 22);
 		contentPane.add(IpButton);
-		
+
 		messageField = new JLabel("WAITING..");
-		messageField.setBounds(60, 448, 210, 20);
+		messageField.setBounds(54, 448, 210, 20);
 		contentPane.add(messageField);
-				
+
 		JLabel textLabel = new JLabel("Search:");
 		textLabel.setBounds(10, 325, 86, 16);
 		contentPane.add(textLabel);
-				
+
 		//Search Box
 		searchBox = new JTextField();
 		searchBox.setBounds(116, 323, 554, 20);
@@ -165,7 +147,7 @@ public class ClientGUI extends JFrame {
 
 		//Send! Button
 		searchButton = new JButton("Send");
-		
+
 		searchButton.setBounds(438, 345, 111, 25);
 		contentPane.add(searchButton);
 
@@ -176,11 +158,11 @@ public class ClientGUI extends JFrame {
 
 		//Frequent words
 		frequentsButton = new JButton("Show frequent words");
-		
+
 
 		frequentsButton.setBounds(228, 345, 187, 25);
 		contentPane.add(frequentsButton);
-				
+
 		//Echoes + Scrollbar
 		echoes = new JTextArea(100, 10);
 		echoes.setTabSize(1);
@@ -193,7 +175,7 @@ public class ClientGUI extends JFrame {
 		JLabel lblStatus = new JLabel("Status :");
 		lblStatus.setBounds(10, 451, 46, 14);
 		contentPane.add(lblStatus);
-		
+
 		panel_1 = new Panel();
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(116, 120, 34, 192);
@@ -204,7 +186,7 @@ public class ClientGUI extends JFrame {
 		contentPane.add(btnLocateMe);
 		setLocationRelativeTo(null);
 	}
-			
+
 	public boolean Update(String msg) {
 		SwingUtilities.invokeLater(() -> echoes.append(msg+"\n"));
 		return true;

@@ -64,14 +64,16 @@ public class ServerController {
                                       "Created by Roberto Garbarino, NotMyUid & Cristiano Olivari",
                                          "Info",
                                              JOptionPane.PLAIN_MESSAGE,
-                                             new ImageIcon("server/resources/ico.png")
+                                             new ImageIcon("client/resources/ico.png")
                                                 ));
 
         view.getReset().addActionListener(e -> {
+
                     if (!server.resetData())
                         view.update("Error: could not reset data");
                     else
                         view.update("Reset data");
+                        view.resetTextBar();
                 }
         );
 

@@ -8,10 +8,10 @@ public class Search implements Callable<Boolean> {
     private String location;
     private Data data;
 
-    public Search(String words, String location, Data database) {
+    public Search(String words, String location, Data data) {
         this.words = words;
         this.location = location;
-        this.data = database;
+        this.data = data;
     }
 
     @Override

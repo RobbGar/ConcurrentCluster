@@ -15,13 +15,13 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Controller {
+public class ClientController {
     private ClientGUI view;
     private Client client;
     private String IP;
 	IPInfo ipInfo;
 
-    public Controller(ClientGUI view){
+    public ClientController(ClientGUI view){
         this.view = view;
 		 ipInfo = IPInfo.builder().setToken("1771642d78e8e5").build();
         initController();
