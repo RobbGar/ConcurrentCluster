@@ -38,6 +38,20 @@ public class Controller {
 
 		});
         
+        view.getLocateMeButton().addActionListener(e -> {
+        	if(!view.getPositionBox().getText().isEmpty()) {
+        		try {
+        		String search = view.getPositionBox().getText().toString().trim();
+		         search = search.replaceAll(" ","+");
+		         String url = "https://www.google.it/maps/place/"+search;
+		         java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        		 }
+			       catch (java.io.IOException ie) {
+			           System.out.println(ie.getMessage());
+			       }
+        	}
+        });
+        
         view.getSearchButton().addActionListener(e -> {
 			if (!validIP(IP)) return;
 			String text = view.getSearchBox().getText();
