@@ -11,6 +11,7 @@ public class TopThree implements Callable<String> {
         this.data = database;
         this.location = location;
     }
+
     @Override
     public String call(){
         return data.getTopThree(location);

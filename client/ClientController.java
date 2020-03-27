@@ -15,13 +15,13 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ClientController {
+class ClientController {
     private ClientGUI view;
     private Client client;
     private String IP;
-	IPInfo ipInfo;
+	private IPInfo ipInfo;
 
-    public ClientController(ClientGUI view){
+    ClientController(ClientGUI view){
         this.view = view;
 		 ipInfo = IPInfo.builder().setToken("1771642d78e8e5").build();
         initController();
@@ -49,17 +49,6 @@ public class ClientController {
 		});
         
         view.getLocateMeButton().addActionListener(e -> {
-
-        		/*try {
-        		String search = view.getPositionBox().getText().trim();
-		         search = search.replaceAll(" ","+");
-		         String url = "https://www.google.it/maps/place/"+search;
-		         java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-        		 }
-			       catch (java.io.IOException ie) {
-			           System.out.println(ie.getMessage());
-			       }
-			       */
         		try {
 					URL whatismyip = new URL("http://checkip.amazonaws.com");
 					BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -70,7 +59,6 @@ public class ClientController {
 				}
 				catch (RateLimitedException | IOException e1)
 				{
-					//TODO remove
 					e1.printStackTrace();
 				}
 

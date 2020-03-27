@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Data{
 
     private ConcurrentHashMap<String, ConcurrentHashMap<String,Integer>> searches = new ConcurrentHashMap<>();
-    private static ConcurrentHashMap<String, Integer> totWords = new ConcurrentHashMap<>(); //Total words searched
+    private static ConcurrentHashMap<String, Integer> totWords = new ConcurrentHashMap<>();
 
     public boolean search(String search, String location) throws IllegalArgumentException {
         location = normalize(location);
@@ -26,10 +26,9 @@ public class Data{
             Integer s = temp.get(elem);
             if (s == null)
                 temp.put(elem, 1);
-            else {
-                //TODO not sure if thread safe
+            else
                 temp.replace(elem, s+1);
-            }
+
             incrementTotWords(location);
         }
         return true;
@@ -44,7 +43,7 @@ public class Data{
     }
 
     private String normalize(String s) {
-        if (s.isEmpty())
+        if (s == null)
             throw new IllegalArgumentException();
         s = s.replaceAll("(\\W)|(\\s+)", " ");
         s = s.toLowerCase();
@@ -54,7 +53,6 @@ public class Data{
     synchronized String getTopThree(String location){
         location = normalize(location);
         String res = "";
-        //TODO manage exception
         if (searches.get(location) == null) return null;
         ConcurrentHashMap<String, Integer> temp = new ConcurrentHashMap<>(searches.get(location));
 

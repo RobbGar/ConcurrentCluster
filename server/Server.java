@@ -62,8 +62,6 @@ public class Server implements IServer{
 		} catch (InterruptedException | ExecutionException e) {
 			view.update("Error searching for " + s);
 			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog (view,"Error Searching for " + s));
-			//TODO remove debug trace
-			e.printStackTrace();
 		}
 		view.update("Searched " + s + " from " + location);
 		return res;
@@ -71,7 +69,6 @@ public class Server implements IServer{
 
 	@Override
 	public String getTopThree(String location){
-
 		Future<String> f = pool.submit(new TopThree(data, location));
 
 		String res = null;
